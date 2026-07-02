@@ -63,7 +63,16 @@ export default function Home() {
         body: formData,
       });
 
-      const data = await res.json();
+      const text = await res.text();
+
+      console.log(text);
+
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error(text);
+      }
 
       if (!res.ok) {
         throw new Error(data.error || "Something went wrong");
